@@ -75,10 +75,11 @@ def fetch_ai_news():
         scraped_list.append({
             'Title': title_div.get_text(),
             'Pub_date': article['pub_date'],
-            'Text': '\n\n'.join(parts)
+            'Link': article['link'], 
+            'Text': ' '.join(parts)
         })
 
-        sleep(5)
+        sleep(2)
 
     return scraped_list
 
