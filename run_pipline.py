@@ -12,14 +12,18 @@ def ingest_all():
     conn = db.get_connection()
     db.insert_articles(conn, all_news)
     unsummarized = db.get_unsummarized(conn)
-    print(json.dumps(unsummarized, indent=4, default=str))
-    print(f'There are {len(unsummarized)} unsummarized articles.')
+    
+    if unsummarized:
+        print(json.dumps(unsummarized, indent=4, default=str))
+        print(f'There are {len(unsummarized)} unsummarized articles.')
 
-    print("Now Summarizing")
-    for article in unsummarized:
-        db.insert_summary(conn, summarize(article['Text']), article['Link'])
-    print("Done!")
-    print(db.current_articles(conn))
+        print("Now Summarizing")
+        for article in unsummarized:
+            db.insert_summary(conn, summarize(article['Text']), article['Link'])
+        print("Done!")
+        print(db.current_articles(conn))
+    else:
+        print('No articles to Summarize')
 
 if __name__ == "__main__":
     ingest_all()
